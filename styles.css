@@ -33,3 +33,44 @@ html, body { overflow-x: hidden; }
 .class-profile { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); }
 .class-profile .field { min-width: 0; }
 .evaluation-table { width: 100%; }
+
+/* Estrutura desktop fixa: impede qualquer sobreposição do menu. */
+@media (min-width: 801px) {
+  .app-shell,
+  .app-shell.sidebar-collapsed {
+    display: block;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 274px;
+    height: 100vh;
+    min-height: 0;
+    transition: width .24s ease;
+  }
+
+  .main-content {
+    margin-left: 274px;
+    width: calc(100% - 274px);
+    min-height: 100vh;
+    transition: margin-left .24s ease, width .24s ease;
+  }
+
+  .app-shell.sidebar-collapsed .sidebar {
+    width: 84px;
+  }
+
+  .app-shell.sidebar-collapsed .main-content {
+    margin-left: 84px;
+    width: calc(100% - 84px);
+  }
+}
+
+@media (max-width: 800px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
