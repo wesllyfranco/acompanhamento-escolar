@@ -82,8 +82,27 @@
   function loadState() {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-      if (!saved || !Array.isArray(saved.students)) return clone(DEMO);
-      return { ...clone(DEMO), ...saved };
+      if (!saved || typeof saved !== 'object') return clone(DEMO);
+      const base = clone(DEMO);
+      const merged = { ...base, ...saved };
+      merged.classes = Array.isArray(saved.classes) && saved.classes.length ? saved.classes : base.classes;
+      merged.students = (Array.isArray(saved.students) && saved.students.length ? saved.students : base.students).map((student, index) => {
+        const fallback = base.students[index % base.students.length];
+        return {
+          ...fallback,
+          ...student,
+          profile: { ...fallback.profile, ...(student.profile || {}) },
+          labels: Array.isArray(student.labels) ? student.labels : (fallback.labels || [])
+        };
+      });
+      merged.teachers = Array.isArray(saved.teachers) ? saved.teachers : base.teachers;
+      merged.users = Array.isArray(saved.users) ? saved.users : base.users;
+      merged.attendances = Array.isArray(saved.attendances) ? saved.attendances : base.attendances;
+      merged.occurrences = Array.isArray(saved.occurrences) ? saved.occurrences : base.occurrences;
+      merged.activeSearch = Array.isArray(saved.activeSearch) ? saved.activeSearch : base.activeSearch;
+      merged.evaluations = saved.evaluations && typeof saved.evaluations === 'object' ? saved.evaluations : {};
+      merged.classProfiles = saved.classProfiles && typeof saved.classProfiles === 'object' ? saved.classProfiles : {};
+      return merged;
     } catch (_) { return clone(DEMO); }
   }
   function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
@@ -124,12 +143,12 @@
     const metrics = [
       ['Turmas ativas', state.classes.length, 'Ano letivo 2026', 'blue'],
       ['Estudantes ativos', state.students.filter(s => s.status === 'ATIVO').length, 'Matrículas atuais', 'green'],
-      ['Estudantes com laudo', state.students.filter(s => s.profile.report === 'Sim').length, 'Atenção individual', 'orange'],
+      ['Estudantes com laudo', state.students.filter(s => (s.profile || {}).report === 'Sim').length, 'Atenção individual', 'orange'],
       ['Atendimentos recentes', state.attendances.length, 'Registros locais', 'red']
     ];
     $('#dashboardMetrics').innerHTML = metrics.map(m => `<div class="metric"><div class="metric-label">${m[0]}</div><div class="metric-value">${m[1]}</div><div class="metric-foot"><span class="dot ${m[3]}"></span>${m[2]}</div></div>`).join('');
     $('#recentList').innerHTML = state.attendances.slice().reverse().slice(0,5).map(a => { const s = studentById(a.studentId); return `<div class="recent-row clickable" data-student="${s.id}"><span class="recent-date">${esc(a.date)}</span><div class="recent-main"><strong>${esc(s.name)}</strong><span>${esc(a.sector)} · ${esc(a.type)} · ${esc(className(s.classId))}</span></div><span class="status-pill ${a.status === 'Concluído' ? 'status-active' : 'status-pending'}">${esc(a.status)}</span></div>`; }).join('') || '<div class="empty-state">Nenhum atendimento registrado.</div>';
-    $('#laudoList').innerHTML = state.students.filter(s => s.profile.report === 'Sim').map(s => `<div class="laudo-row clickable" data-student="${s.id}"><span class="laudo-avatar">${initials(s.name)}</span><div class="laudo-main"><strong>${esc(s.name)}</strong><span>${esc(className(s.classId))} · RA/CGM ${esc(s.ra)}</span></div><span class="status-pill status-pending">LAUDO</span></div>`).join('') || '<div class="empty-state">Nenhum estudante marcado.</div>';
+    $('#laudoList').innerHTML = state.students.filter(s => (s.profile || {}).report === 'Sim').map(s => `<div class="laudo-row clickable" data-student="${s.id}"><span class="laudo-avatar">${initials(s.name)}</span><div class="laudo-main"><strong>${esc(s.name)}</strong><span>${esc(className(s.classId))} · RA/CGM ${esc(s.ra)}</span></div><span class="status-pill status-pending">LAUDO</span></div>`).join('') || '<div class="empty-state">Nenhum estudante marcado.</div>';
   }
 
   function fillClassSelect(select, includeAll = false) {
@@ -148,7 +167,7 @@
   }
   function openStudent(id) { selectedStudentId = id; profileTab = 'dados'; navigate('buscar'); renderProfile(id); setTimeout(() => $('#studentProfile')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80); }
   function renderProfile(id) {
-    const s = studentById(id); if (!s) return; const records = state.attendances.filter(a => a.studentId === id).reverse();
+    const s = studentById(id); if (!s) return; s.profile = s.profile || {}; const records = state.attendances.filter(a => a.studentId === id).reverse();
     const profile = $('#studentProfile'); profile.classList.remove('hidden');
     profile.innerHTML = `<article class="card"><div class="profile-head"><div class="profile-title"><h2>${esc(s.name)}</h2><p>RA/CGM ${esc(s.ra)} · ${esc(className(s.classId))} · ${esc(s.status)}</p></div><div class="profile-actions"><span class="status-pill ${s.status === 'ATIVO' ? 'status-active' : 'status-transferred'}">${esc(s.status)}</span><button class="btn btn-secondary" id="closeProfile">Fechar ficha</button><button class="btn btn-primary" id="printProfile">Imprimir / PDF</button></div></div><div class="profile-tabs"><button class="profile-tab ${profileTab === 'dados' ? 'active' : ''}" data-tab="dados">Dados pessoais</button><button class="profile-tab ${profileTab === 'acompanhamento' ? 'active' : ''}" data-tab="acompanhamento">Acompanhamento</button><button class="profile-tab ${profileTab === 'historico' ? 'active' : ''}" data-tab="historico">Histórico escolar</button><button class="profile-tab ${profileTab === 'atendimentos' ? 'active' : ''}" data-tab="atendimentos">Atendimentos (${records.length})</button></div><div class="profile-panel">${profileTab === 'dados' ? profileData(s) : ''}${profileTab === 'acompanhamento' ? profileAccompaniment(s) : ''}${profileTab === 'historico' ? profileHistory(s) : ''}${profileTab === 'atendimentos' ? profileAttendances(records) : ''}</div></article>`;
     $('#closeProfile').addEventListener('click', () => { selectedStudentId = null; profile.classList.add('hidden'); });
