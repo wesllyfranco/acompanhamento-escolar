@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acompanhamento Escolar — demonstração</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <div class="brand-copy">
+          <div class="brand-title">Acompanhamento<br>Escolar</div>
+          <div class="brand-version">Demonstração · V.1.0</div>
+        </div>
+        <button class="icon-button sidebar-collapse" id="btnCollapse" type="button" title="Recolher menu">‹</button>
+      </div>
+
+      <div class="sidebar-search">
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="menuSearch" type="search" placeholder="Buscar funcionalidade…" autocomplete="off">
+        </label>
+      </div>
+
+      <nav class="nav" id="mainNav" aria-label="Menu principal">
+        <div class="nav-section">
+          <div class="nav-label">Início</div>
+          <button class="nav-item active" data-page="dashboard" data-search="painel início visão geral"><span class="nav-icon">▦</span><span class="nav-text">Painel</span></button>
+          <button class="nav-item" data-page="buscar" data-search="buscar estudante aluno ficha individual histórico laudo"><span class="nav-icon">⌕</span><span class="nav-text">Buscar estudante</span></button>
+        </div>
+        <div class="nav-section">
+          <div class="nav-label">Acompanhamento pedagógico</div>
+          <button class="nav-item" data-page="atendimento" data-search="novo atendimento pedagogia militar professor registro"><span class="nav-icon">＋</span><span class="nav-text">Novo atendimento</span></button>
+          <button class="nav-item" data-page="prof-atendimento" data-search="atendimento professores orientação"><span class="nav-icon">♙</span><span class="nav-text">Atendimento a professores</span></button>
+        </div>
+        <div class="nav-section">
+          <div class="nav-label">Disciplinar</div>
+          <button class="nav-item" data-page="ocorrencias" data-search="fichas ocorrência disciplina militar"><span class="nav-icon">!</span><span class="nav-text">Fichas de ocorrência</span></button>
+          <button class="nav-item" data-page="busca-ativa" data-search="busca ativa faltas ausência contato"><span class="nav-icon">⌖</span><span class="nav-text">Busca ativa</span></button>
+        </div>
+        <div class="nav-section">
+          <div class="nav-label">Pré-Conselho</div>
+          <button class="nav-item" data-page="preconselho" data-search="avaliação trimestral aprendizagem turma"><span class="nav-icon">✓</span><span class="nav-text">Avaliação trimestral</span></button>
+        </div>
+        <div class="nav-section">
+          <div class="nav-label">Gestão escolar</div>
+          <button class="nav-item" data-page="turmas" data-search="turmas estudantes alunos matrículas transferências"><span class="nav-icon">♟</span><span class="nav-text">Turmas e estudantes</span></button>
+          <button class="nav-item" data-page="professores" data-search="professores docentes cadastro"><span class="nav-icon">♙</span><span class="nav-text">Professores</span></button>
+          <button class="nav-item" data-page="disciplinas" data-search="disciplinas matriz curricular"><span class="nav-icon">▧</span><span class="nav-text">Disciplinas</span></button>
+        </div>
+        <div class="nav-section">
+          <div class="nav-label">Configurações</div>
+          <button class="nav-item" data-page="usuarios" data-search="usuários acessos permissões"><span class="nav-icon">⚿</span><span class="nav-text">Usuários e acessos</span></button>
+        </div>
+        <div class="nav-empty" id="navEmpty">Nenhuma funcionalidade encontrada.</div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="footer-dot"></div>
+        <div><strong>Modo demonstração</strong><span>Dados locais e fictícios</span></div>
+      </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button mobile-menu" id="btnMobile" type="button" aria-label="Abrir menu">☰</button>
+          <div>
+            <div class="eyebrow" id="pageEyebrow">Início</div>
+            <h1 id="pageTitle">Visão geral</h1>
+            <p id="pageSubtitle">Acompanhamento escolar em um só lugar.</p>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="school-context"><strong id="schoolName">Colégio Júlio Mesquita</strong><span>Ano letivo 2026 · demonstração</span></div>
+          <div class="user-context"><div class="user-avatar">D</div><div><strong>Usuário demonstrativo</strong><span>ADMINISTRADOR</span></div></div>
+        </div>
+      </header>
+
+      <div class="content" id="content">
+        <section class="page active" id="page-dashboard">
+          <div class="hero-card">
+            <div><span class="hero-badge">AMBIENTE DE TESTE</span><h2>Visão geral do acompanhamento</h2><p>Explore o fluxo de turmas, fichas, atendimentos e pré-conselho usando dados fictícios. Todas as alterações ficam somente neste navegador.</p><div class="hero-actions"><button class="btn btn-orange" data-go="buscar">Buscar estudante</button><button class="btn btn-light" data-go="atendimento">Registrar atendimento</button></div></div>
+            <div class="hero-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="metric-grid" id="dashboardMetrics"></div>
+          <div class="dashboard-grid">
+            <article class="card"><div class="section-head"><div><h2>Últimos atendimentos</h2><p class="muted">Registros recentes na demonstração.</p></div><button class="link-button" data-go="atendimento">Ver todos →</button></div><div id="recentList"></div></article>
+            <article class="card"><div class="section-head"><div><h2>Estudantes com laudo</h2><p class="muted">Acesso rápido às fichas marcadas.</p></div><button class="link-button" data-go="buscar">Buscar →</button></div><div id="laudoList"></div></article>
+          </div>
+          <div class="quick-grid"><button class="quick-card" data-go="turmas"><span class="quick-icon">♟</span><span><strong>Turmas e estudantes</strong><small>Consulte a matrícula e abra uma ficha.</small></span><b>→</b></button><button class="quick-card" data-go="preconselho"><span class="quick-icon">✓</span><span><strong>Pré-conselho</strong><small>Avalie a turma por trimestre e disciplina.</small></span><b>→</b></button><button class="quick-card" data-go="disciplinas"><span class="quick-icon">▧</span><span><strong>Matriz curricular</strong><small>Confira as disciplinas demonstrativas.</small></span><b>→</b></button></div>
+        </section>
+
+        <section class="page" id="page-buscar">
+          <div class="page-intro"><div><span class="eyebrow">ACOMPANHAMENTO</span><h2>Buscar estudante</h2><p>Pesquise por nome, RA/CGM ou filtre por turma para abrir a ficha individual.</p></div></div>
+          <article class="card search-panel"><div class="form-grid three"><label class="field"><span>Nome ou RA/CGM</span><input id="studentSearch" type="search" placeholder="Digite para filtrar…"></label><label class="field"><span>Turma</span><select id="studentClassFilter"></select></label><div class="field field-actions"><button class="btn btn-secondary" id="clearStudentSearch">Limpar filtros</button></div></div><div class="result-count" id="studentResultCount"></div><div class="student-results" id="studentResults"></div></article>
+          <div id="studentProfile" class="profile-wrap hidden"></div>
+        </section>
+
+        <section class="page" id="page-atendimento">
+          <div class="page-intro"><div><span class="eyebrow">ACOMPANHAMENTO PEDAGÓGICO</span><h2>Novo atendimento</h2><p>O registro será incluído automaticamente no histórico da ficha individual.</p></div></div>
+          <article class="card form-card"><form id="attendanceForm"><div class="form-grid two"><label class="field"><span>Turma <em>*</em></span><select id="attendanceClass" required></select></label><label class="field"><span>Estudante <em>*</em></span><select id="attendanceStudent" required></select></label><label class="field"><span>Setor <em>*</em></span><select id="attendanceSector" required><option value="">Selecione…</option><option>Pedagogia</option><option>Corpo cívico-militar</option><option>Corpo docente</option><option>Direção</option></select></label><label class="field"><span>Tipo <em>*</em></span><select id="attendanceType" required><option value="">Selecione…</option><option>Dificuldade de aprendizagem</option><option>Frequência</option><option>Comportamento</option><option>Acolhimento</option><option>Reunião com responsáveis</option><option>Acompanhamento</option><option>Outro</option></select></label><label class="field full"><span>Descrição do atendimento <em>*</em></span><textarea id="attendanceDescription" rows="5" required></textarea></label><label class="field full"><span>Encaminhamento e ações tomadas</span><textarea id="attendanceAction" rows="3"></textarea></label><label class="field"><span>Responsável pela ação</span><input id="attendanceOwner" placeholder="Ex.: Pedagoga Ana"></label><label class="field"><span>Situação</span><select id="attendanceStatus"><option>Registrado</option><option>Em acompanhamento</option><option>Concluído</option></select></label></div><div class="form-footer"><span class="form-note" id="attendanceFeedback"></span><button class="btn btn-primary" type="submit">Salvar atendimento</button></div></form></article>
+        </section>
+
+        <section class="page" id="page-prof-atendimento"><div class="page-intro"><div><span class="eyebrow">ACOMPANHAMENTO PEDAGÓGICO</span><h2>Atendimento a professores</h2><p>Área demonstrativa para orientações, acompanhamento e devolutivas pedagógicas.</p></div><button class="btn btn-primary" data-demo-action="prof-atendimento">＋ Novo registro</button></div><article class="card"><div class="table-wrap"><table><thead><tr><th>Data</th><th>Professor</th><th>Assunto</th><th>Situação</th></tr></thead><tbody id="profAttendanceTable"></tbody></table></div></article></section>
+
+        <section class="page" id="page-ocorrencias"><div class="page-intro"><div><span class="eyebrow">DISCIPLINAR</span><h2>Fichas de ocorrência</h2><p>Registros demonstrativos derivados do fato observado e encaminhamentos.</p></div><button class="btn btn-primary" data-demo-action="ocorrencia">＋ Nova ocorrência</button></div><article class="card"><div class="table-wrap"><table><thead><tr><th>Data</th><th>Estudante</th><th>Fato observado</th><th>Situação</th></tr></thead><tbody id="occurrenceTable"></tbody></table></div></article></section>
+
+        <section class="page" id="page-busca-ativa"><div class="page-intro"><div><span class="eyebrow">DISCIPLINAR</span><h2>Busca ativa</h2><p>Acompanhamento demonstrativo de estudantes que precisam de contato com a família.</p></div><button class="btn btn-primary" data-demo-action="busca-ativa">＋ Registrar contato</button></div><div class="stat-grid" id="activeSearchStats"></div><article class="card"><div class="table-wrap"><table><thead><tr><th>Estudante</th><th>Turma</th><th>Motivo</th><th>Último contato</th><th>Situação</th></tr></thead><tbody id="activeSearchTable"></tbody></table></div></article></section>
+
+        <section class="page" id="page-preconselho"><div class="page-intro"><div><span class="eyebrow">PRÉ-CONSELHO</span><h2>Avaliação trimestral</h2><p>Selecione a turma, a disciplina e o trimestre. Clique no status para alternar rapidamente.</p></div><button class="btn btn-secondary" id="resetEvaluation">Limpar avaliações</button></div><article class="card"><div class="form-grid three"><label class="field"><span>Turma</span><select id="evaluationClass"></select></label><label class="field"><span>Disciplina</span><select id="evaluationSubject"></select></label><label class="field"><span>Trimestre</span><select id="evaluationTerm"><option value="1">1º trimestre</option><option value="2">2º trimestre</option><option value="3">3º trimestre</option></select></label></div><div class="class-profile"><div><span class="field-label">Perfil da turma</span><select id="classProfile"><option>Turma participativa e produtiva</option><option>Turma colaborativa e respeitosa</option><option>Turma heterogênea (níveis variados)</option><option>Turma com necessidade de intervenção pedagógica</option><option>Turma com excesso de conversas paralelas</option></select></div><label class="field"><span>Observações</span><input id="classObservation" placeholder="Anote uma síntese da turma…"></label></div><div class="evaluation-head"><div><h3 id="evaluationHeading">Estudantes</h3><span class="muted" id="evaluationHint"></span></div><button class="btn btn-primary" id="saveEvaluation" type="button">Salvar avaliação</button></div><div class="evaluation-table" id="evaluationTable"></div><div class="form-note" id="evaluationFeedback"></div></article></section>
+
+        <section class="page" id="page-turmas"><div class="page-intro"><div><span class="eyebrow">GESTÃO ESCOLAR</span><h2>Turmas e estudantes</h2><p>Escolha uma turma para consultar os estudantes e abrir suas fichas.</p></div><div class="section-actions"><button class="btn btn-secondary" data-demo-action="importar">Importar .XLS</button><button class="btn btn-primary" data-demo-action="novo-aluno">＋ Estudante</button></div></div><div class="turmas-layout"><article class="card"><div class="section-head"><div><h3>Turmas ativas</h3><p class="muted">Ano letivo 2026</p></div><button class="icon-button" data-demo-action="nova-turma" title="Nova turma">＋</button></div><div id="classCards" class="class-list"></div></article><article class="card student-list-card"><div class="section-head"><div><h3 id="classStudentsTitle">Selecione uma turma</h3><p class="muted" id="classStudentsSubtitle">A lista aparecerá aqui.</p></div></div><div id="classStudents"></div></article></div></section>
+
+        <section class="page" id="page-professores"><div class="page-intro"><div><span class="eyebrow">GESTÃO ESCOLAR</span><h2>Professores</h2><p>Cadastre docentes e acompanhe sua situação no colégio.</p></div><button class="btn btn-primary" data-demo-action="novo-professor">＋ Novo professor</button></div><article class="card"><div class="table-wrap"><table><thead><tr><th>Professor</th><th>E-mail institucional</th><th>Disciplinas</th><th>Situação</th></tr></thead><tbody id="teachersTable"></tbody></table></div></article></section>
+
+        <section class="page" id="page-disciplinas"><div class="page-intro"><div><span class="eyebrow">GESTÃO ESCOLAR</span><h2>Disciplinas e matriz curricular</h2><p>Catálogo demonstrativo organizado por ano e modalidade.</p></div><button class="btn btn-primary" data-demo-action="nova-disciplina">＋ Nova disciplina</button></div><div class="subject-layout"><article class="card"><div class="section-head"><div><h3>Catálogo</h3><p class="muted">Disciplinas cadastradas</p></div></div><div id="subjectCatalog" class="tag-list"></div></article><article class="card"><div class="section-head"><div><h3>Matriz da turma</h3><p class="muted">Selecione a turma para visualizar os componentes.</p></div><select id="subjectClassFilter" class="compact-select"></select></div><div id="classSubjects" class="matrix-list"></div></article></div></section>
+
+        <section class="page" id="page-usuarios"><div class="page-intro"><div><span class="eyebrow">CONFIGURAÇÕES</span><h2>Usuários e acessos</h2><p>Esta tela é apenas uma prévia do gerenciamento de perfis.</p></div><button class="btn btn-primary" data-demo-action="novo-usuario">＋ Novo usuário</button></div><article class="card"><div class="table-wrap"><table><thead><tr><th>Nome</th><th>Login</th><th>Perfil</th><th>Situação</th><th>Último acesso</th></tr></thead><tbody id="usersTable"></tbody></table></div></article></section>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
